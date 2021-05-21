@@ -72,6 +72,32 @@ function setup() {
   // socket = io.connect("http://localhost:8080");
   colorMode(HSB);
 
+  
+
+
+socket.on("connection", socket => {
+	socket.on("join-room", (room) => {
+		socket.join(room);
+		socket.roomId = room;
+		socket.emit("joined");
+	});
+  
+  
+  
+  
+	socket.on("drawing", (data) => {
+		socket.to(socket.roomId).broadcast.emit("drawing", data);
+	});
+});
+  
+  
+  
+  
+  
+  
+  
+  
+  
   idHeader = createElement("h3", "ID: ");
   poiC = color(random(255), 100, 100, 150);
   penC = color(0);
