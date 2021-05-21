@@ -72,8 +72,24 @@ function setup() {
   // socket = io.connect("http://localhost:8080");
   colorMode(HSB);
 
-  
+	
+	
+  socket.on('create', function (room) {
+  socket.join(room);
+});
+	// client side code
+var socket = io.connect();
+socket.emit('create', 'room1');
 
+// server side code
+io.sockets.on('connection', function(socket) {
+  socket.on('create', function(room) {
+    socket.join(room);
+  });
+});
+	
+	
+	
 
 socket.on("connection", socket => {
 	socket.on("join-room", (room) => {
